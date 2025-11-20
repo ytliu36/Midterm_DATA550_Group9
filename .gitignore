@@ -1,1 +1,4 @@
 output/*.rds
+*.Rhistory
+*.DS_Store
+*/.Rapp.history
