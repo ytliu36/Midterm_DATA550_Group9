@@ -1,7 +1,7 @@
 library(dplyr)
 library(gtsummary)
 
-here::i_am("scripts/01_table_1.R")
+here::i_am("scripts/01_table.R")
 
 # Read data
 dat <- read.csv(here::here("covid_sub.csv"))
@@ -42,5 +42,5 @@ tbl <- dat %>%
   add_overall()
 
 # Save output
-saveRDS(tbl, here::here("output", paste0("Table_1_", WHICH_CONFIG, ".rds")))
+saveRDS(tbl, here::here("output", "Table_1.rds"))
 

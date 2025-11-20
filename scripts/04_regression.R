@@ -1,5 +1,5 @@
 here::i_am(
-  "scripts/analysis-regression.R"
+  "scripts/04_regression.R"
 )
 
 # load necessary libraries

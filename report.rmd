@@ -1,0 +1,46 @@
+---
+title: "Analysis Report for the Relationship between `r config::get(config = Sys.getenv('WHICH_CONFIG', 'default'))$binary_variable` and Death"
+author: "Group 9: Winn Wu, Yutong Liu, Zhongyu Li, Cyen Peterkin, Susan Choi"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r basic_setup, echo = FALSE, results = 'hide'}
+# get the binary variable
+config_name <- Sys.getenv('WHICH_CONFIG', 'default')
+binary_variable <- config::get(config = config_name)$binary_variable
+here::i_am("report.rmd")
+```
+
+# Introduction
+The data is from the COVID-19 dataset, which contains information about the patients who died from COVID-19. In this report, we will analyze the relationship between the binary variable `r binary_variable` and death, adjusting or not adjusting for age.
+
+# Analysis 1: Summary Statistics
+Summary statistics of death count and patient age.
+```{r summary_table}
+summary_table <-
+  readRDS(here::here("output", "Table_1.rds"))
+summary_table
+```
+
+# Analysis 2: Difference Tests
+In this section, we will conduct two-sample t-tests for the mean age and the death proportion, between the two groups defined by the binary variable `r binary_variable`.
+```{r test_results}
+test_results <- readRDS(here::here("output/analysis2_results.rds"))
+test_results
+```
+
+# Analysis 3: Death Count Over Time
+In this section, we will plot the death count over time, grouped by the binary variable `r binary_variable`.
+```{r time_plot, echo=FALSE, out.width="80%", fig.align="center"}
+knitr::include_graphics(here::here("output/time_plot.png"))
+```
+
+# Analysis 4: Regression Analysis
+In this section, we will fit a logistic regression model to the data, to further explore the relationship between the binary variable `r binary_variable` and death, adjusting for age.
+
+```{r regression_model_table}
+regression_model_table <-
+  readRDS(here::here("output/regression-model-table.rds"))
+regression_model_table
+```

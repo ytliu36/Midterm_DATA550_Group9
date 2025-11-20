@@ -11,6 +11,7 @@ library(here)
 library(yaml)
 library(dplyr)
 library(broom)
+here::i_am("scripts/02_tests.R")
 
 # Paths
 cfg_path <- here::here("config.yml")
