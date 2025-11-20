@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output: html_document
 ---
 
-```{r basic_setup, echo = FALSE, results = 'hide'}
+```{r basic_setup, echo = FALSE, results = 'hide', message = FALSE, warning = FALSE}
 # get the binary variable
 config_name <- Sys.getenv('WHICH_CONFIG', 'default')
 binary_variable <- config::get(config = config_name)$binary_variable

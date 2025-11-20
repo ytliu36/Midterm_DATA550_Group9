@@ -38,7 +38,7 @@ df <- df %>%
 	filter(
 		!is.na(DEATH),
 		!is.na(AGE),
-		!is.na(!!group_var)
+		!is.na(!!binary_variable)
 	)
 
 # 1) Age t-test
