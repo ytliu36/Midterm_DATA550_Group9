@@ -4,6 +4,7 @@ here::i_am(
 
 # load necessary libraries
 library(gtsummary)
+library(dplyr)
 
 # read the data
 dat <- read.csv(
@@ -27,6 +28,14 @@ cfg <- config::get(
 )
 
 binary_var <- cfg$binary_variable
+
+# clean data
+dat <- dat %>%
+	filter(
+		!is.na(death),
+		!is.na(AGE),
+		!is.na(!!binary_var)
+	)
 
 message("Using configuration: ", WHICH_CONFIG)
 message("Binary variable: ", binary_var)
