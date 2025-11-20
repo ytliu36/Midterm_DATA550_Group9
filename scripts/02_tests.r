@@ -31,6 +31,15 @@ if (!("DATE_DIED" %in% names(df))) stop("DATE_DIED column not found in data")
 # Prepare grouping variable
 df$group <- as.factor(df[[binary_variable]])
 
+# Clean data
+df <- df %>%
+	mutate(DEATH = ifelse(is.na(DATE_DIED), FALSE, TRUE)) %>%
+	filter(
+		!is.na(DEATH),
+		!is.na(AGE),
+		!is.na(!!group_var)
+	)
+
 # 1) Age t-test
 age_df <- df[!is.na(df$AGE) & !is.na(df$group), , drop = FALSE]
 if (length(unique(age_df$group)) < 2) stop("Not enough groups in ", binary_variable, " for AGE t-test")
@@ -119,13 +128,13 @@ test_summary <- data.frame(
 	stringsAsFactors = FALSE
 )
 
-# Write CSV that other users can easily open
-csv_path <- file.path(outdir, "analysis2_summary_by_group.csv")
-write.csv(summary_table, csv_path, row.names = FALSE)
+# # Write CSV that other users can easily open
+# csv_path <- file.path(outdir, "analysis2_summary_by_group.csv")
+# write.csv(summary_table, csv_path, row.names = FALSE)
 
-# Write test-summary CSV (one row per test)
-tests_csv_path <- file.path(outdir, "analysis2_tests_summary.csv")
-write.csv(test_summary, tests_csv_path, row.names = FALSE)
+# # Write test-summary CSV (one row per test)
+# tests_csv_path <- file.path(outdir, "analysis2_tests_summary.csv")
+# write.csv(test_summary, tests_csv_path, row.names = FALSE)
 
 # Save an RDS that contains the table and test objects for R Markdown display
 rds_path <- file.path(outdir, "analysis2_results.rds")
