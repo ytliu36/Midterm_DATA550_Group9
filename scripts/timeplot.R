@@ -17,7 +17,9 @@ death_counts_grouped <- covid_sub |>
   mutate(DIED = if_else(!is.na(DATE_DIED), 1, 0),
          DATE_DIED = as.Date(DATE_DIED,format = "%d/%m/%Y"),
          YEAR_MONTH_DIED = floor_date(DATE_DIED, "month")) |> 
-  filter(`DIED`== 1) |> 
+  filter(`DIED`== 1,
+         !is.na(.data[[bv]]),
+         !is.na(AGE)) |> 
   group_by(across(all_of(bv)), YEAR_MONTH_DIED) |> 
   summarise(death_count = n())
 
@@ -41,7 +43,10 @@ time_plot <- ggplot(death_counts_grouped,
     color = bv
   )
 
-saveRDS(
-  time_plot, 
-  file =  here::here("output/time_plot.rds")
+# save the plot
+ggsave(
+  here::here("output/time_plot.png"),
+  time_plot,
+  width = 10,
+  height = 8
 )
