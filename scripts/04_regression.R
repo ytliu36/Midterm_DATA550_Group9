@@ -5,6 +5,9 @@ here::i_am(
 # load necessary libraries
 library(gtsummary)
 library(dplyr)
+library(broom.helpers)
+library(car)
+library(parameters)
 
 # read the data
 dat <- read.csv(
