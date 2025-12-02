@@ -7,27 +7,15 @@ OUTPUT_DIR = output
 REPORT = report.rmd
 
 # Phony targets
-.PHONY: all clean report tables tests timeplot regression help
+.PHONY: all clean report tables tests timeplot regression help install
 
 # Default target
 all: report
 
-# Help target
-help:
-	@echo "Usage: make [target] [CONFIG=name]"
-	@echo ""
-	@echo "Targets:"
-	@echo "  all        Run the full analysis pipeline and generate report (default)"
-	@echo "  tables     Generate summary tables (Analysis 1)"
-	@echo "  tests      Run statistical tests (Analysis 2)"
-	@echo "  timeplot   Generate time series plot (Analysis 3)"
-	@echo "  regression Run regression analysis (Analysis 4)"
-	@echo "  report     Compile the RMarkdown report"
-	@echo "  clean      Remove all output files"
-	@echo ""
-	@echo "Configuration:"
-	@echo "  CONFIG     Set the configuration from config.yml (default: 'default')"
-	@echo "             Example: make all CONFIG=patient_type"
+# Install dependencies
+install:
+	Rscript -e "renv::restore(prompt = FALSE)"
+
 
 # Analysis 1: Summary Statistics
 tables: $(SCRIPT_DIR)/01_table.R

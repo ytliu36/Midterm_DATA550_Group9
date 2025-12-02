@@ -9,6 +9,16 @@ This project analyzes the relationship between COVID-19 mortality and patient ch
 - `report.rmd`: RMarkdown source for the final HTML report.
 - `Makefile`: Automates the analysis pipeline.
 
+## Installation
+
+To install the required R packages for this project, run:
+
+```bash
+make install
+```
+
+This command uses `renv` to restore the project library from `renv.lock`.
+
 ## Configuration (`config.yml`)
 The analysis is dynamic and can be run for different grouping variables defined in `config.yml`.
 - **default**: Analyzes differences by **SEX** (Male vs Female).
