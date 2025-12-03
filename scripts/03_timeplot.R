@@ -1,7 +1,9 @@
 here::i_am("scripts/03_timeplot.R")
 
 # library load
-library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(lubridate)
 
 # data load
 covid_sub <- read.csv(here::here("covid_sub.csv"))
@@ -13,18 +15,18 @@ config_list <- config::get(
 
 bv <- config_list$binary_variable
 
-death_counts_grouped <- covid_sub |> 
+death_counts_grouped <- covid_sub |>
   mutate(DIED = if_else(!is.na(DATE_DIED), 1, 0),
-         DATE_DIED = as.Date(DATE_DIED,format = "%d/%m/%Y"),
-         YEAR_MONTH_DIED = floor_date(DATE_DIED, "month")) |> 
-  filter(`DIED`== 1,
+         DATE_DIED = as.Date(DATE_DIED, format = "%d/%m/%Y"),
+         YEAR_MONTH_DIED = floor_date(DATE_DIED, "month")) |>
+  filter(`DIED` == 1,
          !is.na(.data[[bv]]),
-         !is.na(AGE)) |> 
-  group_by(across(all_of(bv)), YEAR_MONTH_DIED) |> 
+         !is.na(AGE)) |>
+  group_by(across(all_of(bv)), YEAR_MONTH_DIED) |>
   summarise(death_count = n())
 
 saveRDS(
-  death_counts_grouped, 
+  death_counts_grouped,
   file =  here::here("output/death_counts_grouped.rds")
 )
 
